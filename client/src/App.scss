@@ -1,0 +1,72 @@
+// Colors
+$white: #eeeeee;
+$black: #000000;
+$shadow: rgb(0, 0, 0, 0.3);
+$crayBlue: #008080;
+
+// Fonts
+@font-face {
+    font-family: roboto-regular;
+    src: url(./components/fonts/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: roboto-bold;
+    src: url(./components/fonts/Roboto-Bold.ttf);
+}
+@font-face {
+    font-family: roboto-black;
+    src: url(./components/fonts/Roboto-Black.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: roboto-regular;
+}
+
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    padding: 1rem;
+}
+
+.addPeople {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    button {
+        display: flex;
+        align-items: center;
+        font-family: roboto-black;
+        padding: 0.7rem;
+        width: auto;
+        background-color: $crayBlue;
+        color: $white;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0.3rem 0.7rem 2rem $shadow;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            background-color: $white;
+            color: $crayBlue;
+        }
+        svg {
+            width: 1rem;
+        }
+        span {
+            margin-left: 0.3rem;
+        }
+    }
+}
+
+.tablaUI {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
