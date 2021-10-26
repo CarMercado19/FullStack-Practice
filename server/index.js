@@ -5,7 +5,7 @@ const apiRoutes = require('./routes/mainApi')
 require('./db/database')
 
 // Configuraciones
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 5000);
 
 // Middlewares
 app.use(express.json());

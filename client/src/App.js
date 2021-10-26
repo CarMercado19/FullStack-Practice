@@ -4,7 +4,7 @@ import './App.scss';
 import AddPeople from './components/AddPeople';
 import TablaUI from './components/TablaUI';
 
-function App() {
+const App = () => {
     return (
         <div className="App">
             <AddPeople />

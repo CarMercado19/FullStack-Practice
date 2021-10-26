@@ -1,8 +1,11 @@
 // Colors
-$white: #eeeeee;
+$white: #ffffff;
 $black: #000000;
+$grayWhite: #eeeeee;
 $shadow: rgb(0, 0, 0, 0.3);
 $crayBlue: #008080;
+$green: #4CAF50;
+$red: #F44336;
 
 // Fonts
 @font-face {
@@ -26,11 +29,15 @@ body {
     font-family: roboto-regular;
 }
 
+span {
+    font-family: roboto-bold;
+}
+
 .App {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: $white;
+    background-color: $grayWhite;
     padding: 1rem;
 }
 
@@ -46,13 +53,14 @@ body {
         padding: 0.7rem;
         width: auto;
         background-color: $crayBlue;
-        color: $white;
+        color: $grayWhite;
         border: none;
         border-radius: 10px;
+        cursor: pointer;
         box-shadow: 0.3rem 0.7rem 2rem $shadow;
         transition: all 0.3s ease-in-out;
         &:hover {
-            background-color: $white;
+            background-color: $grayWhite;
             color: $crayBlue;
         }
         svg {
@@ -69,4 +77,155 @@ body {
     justify-content: center;
     width: 100%;
     height: 100%;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    background-color: $grayWhite;
+    padding: 1.5rem;
+    margin: 5rem;
+    border-radius: 10px;
+    h3 {
+        margin: 0;
+        padding: 1rem;
+        font-family: roboto-bold;
+    }
+    .modalInput {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        input {
+            padding: 0.7rem;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            font-size: 0.8rem;
+            text-align: left;
+            border: 1px solid $shadow;
+            border-radius: 8px;
+            box-shadow: 0.2rem 0.3rem 0.3rem $shadow;
+            &:focus {
+                outline: none;
+            }
+        }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type='number'] {
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+        }
+    }
+    .modalButton {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1rem;
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0.7rem;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-left: 1rem;
+            border: none;
+            border-radius: 7px;
+            color: $grayWhite;
+            font-family: roboto-black;
+            box-shadow: 0.2rem 0.3rem 0.3rem $shadow;
+            svg {
+                width: 1rem;
+            }
+            span {
+                margin-left: 0.4rem;
+            }
+        }
+        .done {
+            background-color: $green;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                background-color: $grayWhite;
+                color: $green;
+            }
+        }
+        .cancel {
+            background-color: $red;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                background-color: $grayWhite;
+                color: $red;
+            }
+        }
+    }
+}
+
+.modalDelete {
+    display: flex;
+    flex-direction: column;
+    background-color: $grayWhite;
+    padding: 1.5rem;
+    margin: 10rem;
+    margin-left: 25%;
+    margin-right: 25%;
+    border-radius: 10px;
+    span {
+        text-align: center;
+        font-family: roboto-regular;
+        span {
+            font-family: roboto-bold;
+        }
+    }
+    .modalButton {
+        display: flex;
+        justify-content: center;
+        padding: 1rem;
+        padding-bottom: 0;
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0.7rem;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-left: 1rem;
+            border: none;
+            border-radius: 7px;
+            color: $grayWhite;
+            box-shadow: 0.2rem 0.3rem 0.3rem $shadow;
+            svg {
+                width: 1rem;
+            }
+            span {
+                font-family: roboto-black;
+                margin-left: 0.4rem;
+            }
+        }
+        .done {
+            background-color: $green;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                background-color: $grayWhite;
+                color: $green;
+            }
+        }
+        .cancel {
+            background-color: $red;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                background-color: $grayWhite;
+                color: $red;
+            }
+        }
+    }
+}
+
+.table {
+    background-color: $white;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0.2rem 0.3rem 0.3rem $shadow;
 }
