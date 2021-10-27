@@ -1,9 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
+import Swal from 'sweetalert2';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal } from "@material-ui/core";
 
 const AddPeople = () => {
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
 
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({
         nombre: '',
@@ -20,8 +33,18 @@ const AddPeople = () => {
         await axios.post(BASE_URL, usuarioSeleccionado).then(res => {
             setData(data.concat(res.data));
             abrirCerrarModalInsertar();
+            Toast.fire({
+                icon: 'success',
+                title: 'Usuario añadido'
+            });
             window.location.reload();
-        });
+        }).catch(
+            abrirCerrarModalInsertar(),
+            Toast.fire({
+                icon: 'error',
+                title: 'Faltan datos por llenar'
+            })
+        );
     };
 
     const handleChange = e => {

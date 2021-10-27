@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Swal from 'sweetalert2'
 import { Edit, Delete } from "@material-ui/icons";
 import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableContainer, TableHead, TableBody, TableCell, TableRow, Modal } from "@material-ui/core";
 
 const TablaUI = () => {
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
 
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({
         nombre: '',
@@ -21,7 +34,16 @@ const TablaUI = () => {
     const peticionGet = async() => {
         await axios.get(BASE_URL).then( res => {
             setData(res.data);
-        });
+            Toast.fire({
+                icon: 'success',
+                title: 'Base de datos conectada'
+            });
+        }).catch(
+            Toast.fire({
+                icon: 'info',
+                title: 'Conectando con la base de datos...'
+            })
+        );
     };
     // PUT http://localhost:5000/api/people/1
     const peticionPut = async() => {
@@ -31,18 +53,39 @@ const TablaUI = () => {
                 if(usuarioSeleccionado.id === usuario.id) {
                     usuario.nombre = usuarioSeleccionado.nombre;
                     usuario.apellido = usuarioSeleccionado.apellido;
+                    usuario.edad = usuarioSeleccionado.edad;
                 }
             });
             setData(dataNueva);
             abrirCerrarModalEditar();
-        });
+            Toast.fire({
+                icon: 'info',
+                title: 'Usuario editado'
+            });
+        }).catch(
+            abrirCerrarModalEditar(),
+            Toast.fire({
+                icon: 'error',
+                title: 'Faltan datos por llenar'
+            })
+        );
     };
     // DELETE http://localhost:5000/api/people/1
     const peticionDelete = async() => {
         await axios.delete(BASE_URL + usuarioSeleccionado.id).then(res => {
             setData(data.filter(usuario => usuario.id !== usuarioSeleccionado.id ));
             abrirCerrarModalEliminar();
-        });
+            Toast.fire({
+                icon: 'success',
+                title: 'El usuario ha sido eliminado'
+            });
+        }).catch(
+            abrirCerrarModalEliminar(),
+            Toast.fire({
+                icon: 'error',
+                title: 'El usuario "' + usuarioSeleccionado.nombre + '" no pudo se eliminado'
+            })
+        );
     };
 
     useEffect(async() => {
@@ -94,13 +137,13 @@ const TablaUI = () => {
     const styles = useStyles();
 
     const bodyEditar = (
-        <div className={styles.modal}>
+        <div className={useStyles.modal}>
             <div className="modal">
                 <h3>Editar Usuario</h3>
                 <div className="modalInput">
-                    <input type="text" name="nombre" className={ styles.inputMaterial } placeholder="Nombre" onChange={ handleChange } value={ usuarioSeleccionado && usuarioSeleccionado.nombre } />
-                    <input type="text" name="apellido" className={ styles.inputMaterial } placeholder="Apellido" onChange={ handleChange } value={ usuarioSeleccionado && usuarioSeleccionado.apellido } />
-                    <input type="number" name="edad" className={ styles.inputMaterial } placeholder="Edad" onChange={ handleChange } value={ usuarioSeleccionado && usuarioSeleccionado.edad } />
+                    <input type="text" name="nombre" className={ useStyles.inputMaterial } placeholder="Nombre" onChange={ handleChange } value={ usuarioSeleccionado && usuarioSeleccionado.nombre } />
+                    <input type="text" name="apellido" className={ useStyles.inputMaterial } placeholder="Apellido" onChange={ handleChange } value={ usuarioSeleccionado && usuarioSeleccionado.apellido } />
+                    <input type="number" name="edad" className={ useStyles.inputMaterial } placeholder="Edad" onChange={ handleChange } value={ usuarioSeleccionado && usuarioSeleccionado.edad } />
                 </div>
                 <div className="modalButton">
                     <button className="done" onClick={ () => peticionPut() }>
@@ -121,7 +164,7 @@ const TablaUI = () => {
     );
     
     const bodyEliminar = (
-        <div className={styles.modal}>
+        <div className={useStyles.modal}>
             <div className="modalDelete">
                 <span>¿Estás seguro que deseas eliminar el usuario <span><b>{usuarioSeleccionado && usuarioSeleccionado.nombre}</b></span>?</span>
                 <div className="modalButton">
